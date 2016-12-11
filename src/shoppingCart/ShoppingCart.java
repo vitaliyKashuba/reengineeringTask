@@ -2,17 +2,17 @@ package shoppingCart;
 
 import java.util.*;
 import java.text.*;
+import static shoppingCart.ShoppingCart.ItemTypes.*;
 
 /**
  * Containing items and calculating price.
  */
 public class ShoppingCart{
     
-	public static final int ITEM_REGULAR     = 0;
-    public static final int ITEM_DISCOUNT    = 1;
-    public static final int ITEM_SECOND_FREE = 2;
-    public static final int ITEM_FOR_SALE    = 3;
-
+    enum ItemTypes
+    {
+        ITEM_REGULAR, ITEM_DISCOUNT, ITEM_SECOND_FREE, ITEM_FOR_SALE;
+    }
 	/** Container for added items */
     public List items = new ArrayList();
 	
@@ -21,22 +21,15 @@ public class ShoppingCart{
         String title;
         double price;
         int quantity;
-        int type;
+        ItemTypes type;
         
-        /**
-         * added to use in unittest
-         */
-        public Item(String title, int type, double price, int quantity)
+        public Item(String title, ItemTypes type, double price, int quantity)
         {
             this.title = title;
             this.price = price;
             this.quantity = quantity;
             this.type = type;
-        }
-        
-        /*public Item()
-        {
-        }*/
+        }       
     }
     
     /**
@@ -63,7 +56,7 @@ public class ShoppingCart{
      * @throws IndexOutOfBoundsException if total items added over 99
      * @throws IllegalArgumentException if some value is wrong
      */
-    public void addItem(String title, double price, int quantity, int type) {
+    public void addItem(String title, double price, int quantity, ItemTypes type) {
         if (title == null || title.length() == 0 || title.length() > 32)
             throw new IllegalArgumentException("Illegal title");
             
@@ -75,9 +68,6 @@ public class ShoppingCart{
             
         if (items.size() == 99)
             throw new IndexOutOfBoundsException("No more space in cart");
-        
-        if(type <ITEM_REGULAR || type > ITEM_FOR_SALE)
-            throw new IllegalArgumentException("wrong type");
             
         items.add(new Item(title, type, price, quantity));
     }
