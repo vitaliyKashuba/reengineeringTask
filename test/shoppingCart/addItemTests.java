@@ -114,25 +114,25 @@ public class addItemTests
     @Test
     public void addItemTest10()
     {
-        shoppingCart.addItem("title", 10, 10, ShoppingCart.ITEM_DISCOUNT);
+        shoppingCart.addItem("title", 10, 10, ShoppingCart.ItemTypes.ITEM_DISCOUNT);
     }
     
     @Test
     public void addItemTest11()
     {
-        shoppingCart.addItem("title", 10, 10, ShoppingCart.ITEM_FOR_SALE);
+        shoppingCart.addItem("title", 10, 10, ShoppingCart.ItemTypes.ITEM_FOR_SALE);
     }
     
     @Test
     public void addItemTest12()
     {
-        shoppingCart.addItem("title", 10, 10, ShoppingCart.ITEM_REGULAR);
+        shoppingCart.addItem("title", 10, 10, ShoppingCart.ItemTypes.ITEM_REGULAR);
     }
     
     @Test
     public void addItemTest13()
     {
-        shoppingCart.addItem("title", 10, 10, ShoppingCart.ITEM_SECOND_FREE);
+        shoppingCart.addItem("title", 10, 10, ShoppingCart.ItemTypes.ITEM_SECOND_FREE);
     }
     
     @Test(expected=IllegalArgumentException.class)
