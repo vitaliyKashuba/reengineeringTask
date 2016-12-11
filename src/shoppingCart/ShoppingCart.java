@@ -3,12 +3,16 @@ package shoppingCart;
 import java.util.*;
 import java.text.*;
 import static shoppingCart.ShoppingCart.ItemTypes.*;
+import sun.nio.cs.HistoricallyNamedCharset;
 
 /**
  * Containing items and calculating price.
  */
 public class ShoppingCart{
     
+    /**
+     * change constants
+     */
     enum ItemTypes
     {
         ITEM_REGULAR, ITEM_DISCOUNT, ITEM_SECOND_FREE, ITEM_FOR_SALE;
@@ -70,6 +74,32 @@ public class ShoppingCart{
             throw new IndexOutOfBoundsException("No more space in cart");
             
         items.add(new Item(title, type, price, quantity));
+    }
+    
+    /**
+     * add for old contructor compability
+     * to avoid rewriting lot of unittests
+     * @deprecated
+     */
+    @Deprecated
+    public void addItem(String title, double price, int quantity, int type)
+    {
+        switch(type)
+        {
+            case 0:
+                addItem(title, price, quantity, ITEM_REGULAR);
+                break;
+            case 1:
+                addItem(title, price, quantity, ITEM_DISCOUNT);
+                break;
+            case 2:
+                addItem(title, price, quantity, ITEM_SECOND_FREE);
+                break;
+            case 3:
+                addItem(title, price, quantity, ITEM_FOR_SALE);
+                break;
+            default:
+            throw new IllegalArgumentException("invalid type");    
     }
     
     /**
