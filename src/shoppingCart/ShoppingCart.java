@@ -99,7 +99,8 @@ public class ShoppingCart{
                 addItem(title, price, quantity, ITEM_FOR_SALE);
                 break;
             default:
-            throw new IllegalArgumentException("invalid type");    
+            throw new IllegalArgumentException("invalid type");  
+        }
     }
     
     /**
@@ -120,7 +121,7 @@ public class ShoppingCart{
      *          
      *          if no items in cart returns "No items." string.
      */
-    public String toString() {
+     public String toString() {
         StringBuffer sb = new StringBuffer();
         if (items.size() == 0)
             return "No items.";
