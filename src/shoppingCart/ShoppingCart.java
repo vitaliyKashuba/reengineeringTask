@@ -229,6 +229,7 @@ public class ShoppingCart{
                 
             case ITEM_FOR_SALE:
                 discount = 90;
+                return discount;
         }
         discount += item.quantity / 100 * 10;
         if (discount > 80)
