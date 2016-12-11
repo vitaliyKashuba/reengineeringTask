@@ -109,38 +109,9 @@ public class ShoppingCart{
             
         double total = 0.00;
         
-        sb.append(" # Item                   Price Quan. Discount      Total\n");
-        sb.append("---------------------------------------------------------\n");
-
-        for (int i = 0; i < items.size(); i++) {
-            Item item = (Item) items.get(i);
-            int discount = calculateDiscount(item);
-            double itemTotal = item.price * item.quantity * (100.00 - discount) / 100.00;
-            
-            appendPaddedRight(sb, String.valueOf(i + 1), 2);
-            sb.append(" ");
-            appendPaddedLeft(sb, item.title, 20);
-            sb.append(" ");
-            appendPaddedRight(sb, MONEY.format(item.price), 7);
-            sb.append(" ");
-            appendPaddedRight(sb, String.valueOf(item.quantity), 4);
-            sb.append("  ");
-            if (discount == 0)
-                sb.append("       -");
-            else {
-                appendPaddedRight(sb, String.valueOf(discount), 7);
-                sb.append("%");
-            }
-            sb.append(" ");
-            appendPaddedRight(sb, MONEY.format(itemTotal), 10);
-            sb.append("\n");
-            
-            total += itemTotal;
-        }
-        sb.append("---------------------------------------------------------\n");
-        appendPaddedRight(sb, String.valueOf(items.size()), 2);
-        sb.append("                                             ");
-        appendPaddedRight(sb, MONEY.format(total), 10);
+        toStringBuildHeader(sb);
+        total = toStringBuildBody(sb, total);
+        toStringBuildFooter(sb, total);
 
         return sb.toString();
     }
@@ -179,6 +150,59 @@ public class ShoppingCart{
             for (int i = str.length(); i < width; i++)
                 sb.append(" ");
         }
+    }
+    
+    /**
+     * add header to string buffer, used in toString()
+     */
+    private void toStringBuildHeader(StringBuffer sb)
+    {
+        sb.append(" # Item                   Price Quan. Discount      Total\n");
+        sb.append("---------------------------------------------------------\n");
+    }
+    
+    /**
+     * add body to string buffer, used in toString()
+     */
+    private double toStringBuildBody(StringBuffer sb, double total)
+    {
+        for (int i = 0; i < items.size(); i++) {
+            Item item = (Item) items.get(i);
+            int discount = calculateDiscount(item);
+            double itemTotal = item.price * item.quantity * (100.00 - discount) / 100.00;
+            
+            appendPaddedRight(sb, String.valueOf(i + 1), 2);
+            sb.append(" ");
+            appendPaddedLeft(sb, item.title, 20);
+            sb.append(" ");
+            appendPaddedRight(sb, MONEY.format(item.price), 7);
+            sb.append(" ");
+            appendPaddedRight(sb, String.valueOf(item.quantity), 4);
+            sb.append("  ");
+            if (discount == 0)
+                sb.append("       -");
+            else {
+                appendPaddedRight(sb, String.valueOf(discount), 7);
+                sb.append("%");
+            }
+            sb.append(" ");
+            appendPaddedRight(sb, MONEY.format(itemTotal), 10);
+            sb.append("\n");
+            
+            total += itemTotal;
+        }
+        return total;
+    }
+    
+    /**
+     * add footer to string buffer, used in toString()
+     */
+    private void toStringBuildFooter(StringBuffer sb, double total)
+    {
+        sb.append("---------------------------------------------------------\n");
+        appendPaddedRight(sb, String.valueOf(items.size()), 2);
+        sb.append("                                             ");
+        appendPaddedRight(sb, MONEY.format(total), 10);
     }
 
     /**
