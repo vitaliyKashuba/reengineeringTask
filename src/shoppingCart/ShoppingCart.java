@@ -26,16 +26,17 @@ public class ShoppingCart{
         /**
          * added to use in unittest
          */
-        public Item(int type, double price, int quantity)
+        public Item(String title, int type, double price, int quantity)
         {
+            this.title = title;
             this.price = price;
             this.quantity = quantity;
             this.type = type;
         }
         
-        public Item()
+        /*public Item()
         {
-        }
+        }*/
     }
     
     /**
@@ -78,13 +79,7 @@ public class ShoppingCart{
         if(type <ITEM_REGULAR || type > ITEM_FOR_SALE)
             throw new IllegalArgumentException("wrong type");
             
-        Item item = new Item();
-        item.title    = title;
-        item.price    = price;
-        item.quantity = quantity;
-        item.type     = type;
-        
-        items.add(item);
+        items.add(new Item(title, type, price, quantity));
     }
     
     /**
