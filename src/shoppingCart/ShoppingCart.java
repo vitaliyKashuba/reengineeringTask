@@ -22,7 +22,7 @@ public class ShoppingCart{
     private final static int COLUMN_LENGTH_ITEM = 20;
     private final static int COLUMN_LENGTH_PRICE = 7;
     private final static int COLUMN_LENGTH_QUANTITY = 4;
-    private final static int COLUMN_LENGTH_DISCOUNT = 7;
+    private final static int COLUMN_LENGTH_DISCOUNT = 8;
     private final static int COLUMN_LENGTH_TOTAL = 10;
 	
 	/** item info */
@@ -181,6 +181,15 @@ public class ShoppingCart{
     }
     
     /**
+     * do the same as appendPaddedRight, but adds extra string
+     * used to simplyfier toString builder
+     */
+    private static void appendPaddedRight(StringBuffer sb, String str, int width, String extra){
+        appendPaddedRight(sb, str, width);
+        sb.append(extra);
+    }
+    
+    /**
      * Adds string to buffer, wills spaces to width.
      * If string is longer than width it is trimmed and ends with '...'
      */
@@ -214,23 +223,17 @@ public class ShoppingCart{
             Item item = (Item) items.get(i);
             int discount = calculateDiscount(item);
             
-            appendPaddedRight(sb, String.valueOf(i + 1), COLUMN_LENGTH_NUMBER);
-            sb.append(" ");
+            appendPaddedRight(sb, String.valueOf(i + 1), COLUMN_LENGTH_NUMBER, " ");
             appendPaddedLeft(sb, item.title, COLUMN_LENGTH_ITEM);
             sb.append(" ");
-            appendPaddedRight(sb, MONEY.format(item.price), COLUMN_LENGTH_PRICE);
-            sb.append(" ");
-            appendPaddedRight(sb, String.valueOf(item.quantity), COLUMN_LENGTH_QUANTITY);
-            sb.append("  ");
+            appendPaddedRight(sb, MONEY.format(item.price), COLUMN_LENGTH_PRICE, " ");
+            appendPaddedRight(sb, String.valueOf(item.quantity), COLUMN_LENGTH_QUANTITY, "  ");
             if (discount == 0)
-                sb.append("       -");
+                appendPaddedRight(sb, "-", COLUMN_LENGTH_DISCOUNT, " ");
             else {
-                appendPaddedRight(sb, String.valueOf(discount), COLUMN_LENGTH_DISCOUNT);
-                sb.append("%");
+                appendPaddedRight(sb, String.valueOf(discount)+"%", COLUMN_LENGTH_DISCOUNT, " ");
             }
-            sb.append(" ");
-            appendPaddedRight(sb, MONEY.format(calculateItemTotal(item)), COLUMN_LENGTH_TOTAL);
-            sb.append("\n");
+            appendPaddedRight(sb, MONEY.format(calculateItemTotal(item)), COLUMN_LENGTH_TOTAL, "\n");
         }
     }
     
@@ -240,9 +243,9 @@ public class ShoppingCart{
     private void toStringBuildFooter(StringBuffer sb)
     {
         sb.append("---------------------------------------------------------\n");
-        appendPaddedRight(sb, String.valueOf(items.size()), 2);
+        appendPaddedRight(sb, String.valueOf(items.size()), COLUMN_LENGTH_NUMBER);
         sb.append("                                             ");
-        appendPaddedRight(sb, MONEY.format(calculateOrderTotal()), 10);
+        appendPaddedRight(sb, MONEY.format(calculateOrderTotal()), COLUMN_LENGTH_TOTAL);
     }
     
     private double calculateItemTotal(Item i){
