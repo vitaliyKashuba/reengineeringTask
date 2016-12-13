@@ -149,9 +149,7 @@ public class ShoppingCart{
         StringBuffer sb = new StringBuffer();
         if (items.size() == 0)
             return "No items.";
-            
-        double total = 0.00;
-        
+                
         toStringBuildHeader(sb);
         toStringBuildBody(sb);
         toStringBuildFooter(sb);
