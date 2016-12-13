@@ -207,7 +207,6 @@ public class ShoppingCart{
         for (int i = 0; i < items.size(); i++) {
             Item item = (Item) items.get(i);
             int discount = calculateDiscount(item);
-            double itemTotal = item.price * item.quantity * (100.00 - discount) / 100.00;
             
             appendPaddedRight(sb, String.valueOf(i + 1), 2);
             sb.append(" ");
@@ -224,7 +223,7 @@ public class ShoppingCart{
                 sb.append("%");
             }
             sb.append(" ");
-            appendPaddedRight(sb, MONEY.format(itemTotal), 10);
+            appendPaddedRight(sb, MONEY.format(calculateItemTotal(item)), 10);
             sb.append("\n");
         }
     }
@@ -237,15 +236,18 @@ public class ShoppingCart{
         sb.append("---------------------------------------------------------\n");
         appendPaddedRight(sb, String.valueOf(items.size()), 2);
         sb.append("                                             ");
-        appendPaddedRight(sb, MONEY.format(calculateTotal()), 10);
+        appendPaddedRight(sb, MONEY.format(calculateOrderTotal()), 10);
     }
     
-    private double calculateTotal()
-    {
+    private double calculateItemTotal(Item i){
+        return i.getPrice() * i.getQuantity() * (100.00 - calculateDiscount(i)) / 100.00;
+    }
+    
+    private double calculateOrderTotal(){
         double total=0;
         for(Item i : items)
         {
-            total = total + (i.getPrice() * i.getQuantity() * (100.00 - calculateDiscount(i)) / 100.00);
+            total = total + calculateItemTotal(i);
         }
         return total;
     }
