@@ -13,7 +13,7 @@ import org.junit.runners.Suite;
 @RunWith(Suite.class)
 @Suite.SuiteClasses(
 {
-    shoppingCart.addItemTests.class, shoppingCart.calculateDiscountTest.class
+    shoppingCart.addItemTests.class, shoppingCart.calculateDiscountTest.class, shoppingCart.toStringTest.class
 })
 public class ShoppingCartTest
 {

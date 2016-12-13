@@ -18,6 +18,12 @@ public class ShoppingCart{
     }
 	/** Container for added items */
     private List<Item> items = new ArrayList<>();
+    private final static int COLUMN_LENGTH_NUMBER = 2;
+    private final static int COLUMN_LENGTH_ITEM = 20;
+    private final static int COLUMN_LENGTH_PRICE = 2;
+    private final static int COLUMN_LENGTH_QUANTITY = 2;
+    private final static int COLUMN_LENGTH_DISCOUNT = 2;
+    private final static int COLUMN_LENGTH_TOTAL = 2;
 	
 	/** item info */
     public static class Item {
