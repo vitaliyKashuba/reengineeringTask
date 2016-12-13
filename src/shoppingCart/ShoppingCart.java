@@ -17,14 +17,14 @@ public class ShoppingCart{
         ITEM_REGULAR, ITEM_DISCOUNT, ITEM_SECOND_FREE, ITEM_FOR_SALE;
     }
 	/** Container for added items */
-    private List items = new ArrayList();
+    private List<Item> items = new ArrayList<>();
 	
 	/** item info */
     public static class Item {
-        String title;
-        double price;
-        int quantity;
-        ItemTypes type;
+        private String title;
+        private double price;
+        private int quantity;
+        private ItemTypes type;
         
         public Item(String title, ItemTypes type, double price, int quantity)
         {
@@ -32,7 +32,28 @@ public class ShoppingCart{
             this.price = price;
             this.quantity = quantity;
             this.type = type;
-        }       
+        } 
+
+        public String getTitle()
+        {
+            return title;
+        }
+
+        public double getPrice()
+        {
+            return price;
+        }
+
+        public int getQuantity()
+        {
+            return quantity;
+        }
+
+        public ItemTypes getType()
+        {
+            return type;
+        }
+        
     }
     
     /**
@@ -126,8 +147,8 @@ public class ShoppingCart{
         double total = 0.00;
         
         toStringBuildHeader(sb);
-        total = toStringBuildBody(sb, total);
-        toStringBuildFooter(sb, total);
+        toStringBuildBody(sb);
+        toStringBuildFooter(sb);
 
         return sb.toString();
     }
@@ -181,7 +202,7 @@ public class ShoppingCart{
     /**
      * add body to string buffer, used in toString()
      */
-    private double toStringBuildBody(StringBuffer sb, double total)
+    private void toStringBuildBody(StringBuffer sb)
     {
         for (int i = 0; i < items.size(); i++) {
             Item item = (Item) items.get(i);
@@ -205,21 +226,28 @@ public class ShoppingCart{
             sb.append(" ");
             appendPaddedRight(sb, MONEY.format(itemTotal), 10);
             sb.append("\n");
-            
-            total += itemTotal;
         }
-        return total;
     }
     
     /**
      * add footer to string buffer, used in toString()
      */
-    private void toStringBuildFooter(StringBuffer sb, double total)
+    private void toStringBuildFooter(StringBuffer sb)
     {
         sb.append("---------------------------------------------------------\n");
         appendPaddedRight(sb, String.valueOf(items.size()), 2);
         sb.append("                                             ");
-        appendPaddedRight(sb, MONEY.format(total), 10);
+        appendPaddedRight(sb, MONEY.format(calculateTotal()), 10);
+    }
+    
+    private double calculateTotal()
+    {
+        double total=0;
+        for(Item i : items)
+        {
+            total = total + (i.getPrice() * i.getQuantity() * (100.00 - calculateDiscount(i)) / 100.00);
+        }
+        return total;
     }
 
     /**
