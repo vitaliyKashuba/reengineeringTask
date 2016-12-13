@@ -20,10 +20,10 @@ public class ShoppingCart{
     private List<Item> items = new ArrayList<>();
     private final static int COLUMN_LENGTH_NUMBER = 2;
     private final static int COLUMN_LENGTH_ITEM = 20;
-    private final static int COLUMN_LENGTH_PRICE = 2;
-    private final static int COLUMN_LENGTH_QUANTITY = 2;
-    private final static int COLUMN_LENGTH_DISCOUNT = 2;
-    private final static int COLUMN_LENGTH_TOTAL = 2;
+    private final static int COLUMN_LENGTH_PRICE = 7;
+    private final static int COLUMN_LENGTH_QUANTITY = 4;
+    private final static int COLUMN_LENGTH_DISCOUNT = 7;
+    private final static int COLUMN_LENGTH_TOTAL = 10;
 	
 	/** item info */
     public static class Item {
@@ -214,22 +214,22 @@ public class ShoppingCart{
             Item item = (Item) items.get(i);
             int discount = calculateDiscount(item);
             
-            appendPaddedRight(sb, String.valueOf(i + 1), 2);
+            appendPaddedRight(sb, String.valueOf(i + 1), COLUMN_LENGTH_NUMBER);
             sb.append(" ");
-            appendPaddedLeft(sb, item.title, 20);
+            appendPaddedLeft(sb, item.title, COLUMN_LENGTH_ITEM);
             sb.append(" ");
-            appendPaddedRight(sb, MONEY.format(item.price), 7);
+            appendPaddedRight(sb, MONEY.format(item.price), COLUMN_LENGTH_PRICE);
             sb.append(" ");
-            appendPaddedRight(sb, String.valueOf(item.quantity), 4);
+            appendPaddedRight(sb, String.valueOf(item.quantity), COLUMN_LENGTH_QUANTITY);
             sb.append("  ");
             if (discount == 0)
                 sb.append("       -");
             else {
-                appendPaddedRight(sb, String.valueOf(discount), 7);
+                appendPaddedRight(sb, String.valueOf(discount), COLUMN_LENGTH_DISCOUNT);
                 sb.append("%");
             }
             sb.append(" ");
-            appendPaddedRight(sb, MONEY.format(calculateItemTotal(item)), 10);
+            appendPaddedRight(sb, MONEY.format(calculateItemTotal(item)), COLUMN_LENGTH_TOTAL);
             sb.append("\n");
         }
     }
