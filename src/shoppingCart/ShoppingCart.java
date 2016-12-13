@@ -13,12 +13,11 @@ public class ShoppingCart{
     /**
      * change constants
      */
-    enum ItemTypes
-    {
+    enum ItemTypes{
         ITEM_REGULAR, ITEM_DISCOUNT, ITEM_SECOND_FREE, ITEM_FOR_SALE;
     }
 	/** Container for added items */
-    public List items = new ArrayList();
+    private List items = new ArrayList();
 	
 	/** item info */
     public static class Item {
@@ -55,7 +54,7 @@ public class ShoppingCart{
      * @param title     item title 1 to 32 symbols
      * @param price     item ptice in cents, > 0, < 1000
      * @param quantity  item quantity, from 1 to 1000
-     * @param type      item type, on of ShoppingCart.ITEM_* constants
+     * @param type      item type, on of ShoppingCart.enum's
      *
      * @throws IndexOutOfBoundsException if total items added over 99
      * @throws IllegalArgumentException if some value is wrong
@@ -79,13 +78,11 @@ public class ShoppingCart{
     /**
      * add for old contructor compability
      * to avoid rewriting lot of unittests
-     * @deprecated
+     * @deprecated because use int type field instead of enum
      */
     @Deprecated
-    public void addItem(String title, double price, int quantity, int type)
-    {
-        switch(type)
-        {
+    public void addItem(String title, double price, int quantity, int type){
+        switch(type){
             case 0:
                 addItem(title, price, quantity, ITEM_REGULAR);
                 break;
@@ -150,8 +147,9 @@ public class ShoppingCart{
      * @return "    str".length() == width
      */
     private static void appendPaddedRight(StringBuffer sb, String str, int width){
-        for (int i = str.length(); i < width; i++)
+        for (int i = str.length(); i < width; i++){
             sb.append(" ");
+        }
         sb.append(str);
     }
     
